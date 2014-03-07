@@ -1,0 +1,92 @@
+<h1 class="page-header">Profile</h1>
+<h4><%= link_to "Following: #{@user.leaders.count}
+  | Followers: #{@user.followers.count}",
+  follow_path(@user.id) %></h4>
+
+<p>Name: <%= @user.name %></p>
+<p>Email: <%= @user.email %></p>
+
+
+ <% if @can_edit %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= form_tag posts_url, :method => 'post' do %>
+        <div class="form-group">
+          <%= label_tag :post_text %>
+          <%= text_field_tag :post_text, "", class: 'form-control', placeholder: 'Enter text here' %>
+        </div>
+
+        <div class="form-group">
+          <%= label_tag :topic_id, "Topic" %>
+          <%= select_tag :topic_id, options_from_collection_for_select(Topic.all.order('name asc'), :id, :name), class: 'form-control', multiple: true, prompt: "Select optional topics" %>
+        </div>
+
+        <%= submit_tag 'Post', class: 'btn btn-default' %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+   <% if @can_follow %>
+    <%= link_to "Follow", new_follow_path(@user.id),
+              :class => "pull-right btn btn-success btn-large" %>
+    <% else %>
+     <%= link_to "Unfollow", follow_path(@user.id), :method => 'delete',
+              :class => "pull-right btn btn-success btn-large btn-danger" %>
+  <% end %>
+
+ <% end %>
+
+<% @posts.each do |post| %>
+  <div class="row">
+    <h2><%= link_to @user.name, user_path(@user.id)%></h2>
+    <p><%= post.text %></p>
+
+
+
+    <% topics = Topic.joins('INNER JOIN mentions ON topics.id = mentions.topic_id').where('mentions.post_id = ?', post.id) %>
+    <% if !topics.blank? %>
+        <p>Topic(s):
+        <% topics.each do |topic| %>
+           <%= link_to topic.name, topic_path(topic.id) %>
+        <% end %>
+        </p>
+      <% end %>
+
+    <p>Likes: <%= Like.where(post_id: post.id).count %></p>
+    <% if Like.find_by(post_id: post.id, user_id: session[:user_id] ) %>
+      <%= link_to "Unlike", like_path(post.id), :method => 'delete',
+            :class => "btn btn-success btn-large btn-danger" %>
+    <% else %>
+      <%= link_to "Like", new_like_path(post.id),
+            :class => "btn btn-success btn-large" %>
+    <% end %>
+
+   <div class="row">
+     <% if @can_edit %>
+      <%= link_to "Edit This Post", edit_post_path(post.id) %> |
+      <%= link_to "Delete This Post", post_path(post.id), :method => 'delete' %>
+     <%end%>
+   </div>
+
+     <p>Comments: <%= Comment.where(post_id: post.id).count %></p>
+      <% comments = Comment.where(post_id: post.id).order("updated_at asc") %>
+      <% if !comments.nil? %>
+        <% comments.each do |comment| %>
+            <p>Comment by <%= link_to User.find_by(id: comment.user_id).name, user_path(comment.user_id) %> saying "<%= comment.text %>"</p>
+        <% end %>
+      <% end %>
+
+      <div class="row">
+          <div class="col-md-6">
+            <%= form_tag comments_url(post.id), :method => 'post' do %>
+              <div class="form-group">
+                <%= label_tag :comment_text %>
+                <%= text_field_tag :comment_text, "", class: 'form-control', placeholder: 'Enter comment here' %>
+              </div>
+              <%= submit_tag 'Comment', class: 'btn btn-default' %>
+            <% end %>
+          </div>
+        </div>
+
+  </div>
+<% end %>

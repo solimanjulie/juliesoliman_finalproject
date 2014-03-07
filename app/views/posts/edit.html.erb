@@ -1,0 +1,19 @@
+<div class="page-header">
+  <h1>Edit Post</h1>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <%= form_tag "/posts/#{@post.id}", :method => 'patch' do %>
+
+      <div class="form-group">
+        <%= label_tag :post_text %>
+        <%= text_field_tag :post_text, @post.text, class: 'form-control', placeholder: 'Edit text' %>
+      </div>
+      <%= submit_tag 'Update Post', class: 'btn btn-default' %>
+    <% end %>
+
+  </div>
+</div>
+

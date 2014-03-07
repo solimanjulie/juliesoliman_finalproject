@@ -1,0 +1,14 @@
+<h1 class="page-header">Following</h1>
+
+<% @leaders.each do |leader| %>
+    <h2><%= link_to leader.name, user_path(leader.id) %></h2>
+    <p>Email: <%= leader.email %></p>
+<% end %>
+
+<h1 class="page-header">Followers</h1>
+
+<% @followers.each do |follower| %>
+    <h2><%= link_to follower.name, user_path(follower.id) %></h2>
+  <p>Email: <%= follower.email %></p>
+<% end %>
+
