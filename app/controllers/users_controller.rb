@@ -39,7 +39,7 @@ class UsersController < ApplicationController
         UserMailer.welcome_email(@user).deliver
         format.html { redirect_to root_url, notice: "Thanks for signing up, #{@user.name}!"}
       else
-        format.html { redirect_to_current_url "Error creating this user"}
+        format.html { redirect_to_current_url "Error creating this user: #{@user.name}, #{@user.email}, #{@user.password}"}
       end
     end
   end
