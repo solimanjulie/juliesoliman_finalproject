@@ -28,19 +28,20 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new
-
     @user.name = params[:name]
     @user.email = params[:email]
     @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
 
-    respond_to do |format|
-      if @user.save
-        session[:user_id] = @user.id
-        UserMailer.welcome_email(@user).deliver
-        format.html { redirect_to root_url, notice: "Thanks for signing up, #{@user.name}!"}
-      else
-        format.html { redirect_to_current_url "Error creating this user: #{@user.name}, #{@user.email}, #{@user.password}"}
+    @user.save
+    if @user.errors.any?
+      @user.errors.full_messages.each do |msg|
+        redirect_to_current_url msg
       end
+    else
+      session[:user_id] = @user.id
+      UserMailer.welcome_email(@user).deliver
+      redirect_to root_url, notice: "Thanks for signing up, #{@user.name}!"
     end
   end
 end

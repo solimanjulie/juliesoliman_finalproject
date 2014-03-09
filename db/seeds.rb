@@ -1,23 +1,28 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 users_data = [ { :name => "Julie Soliman",
                  :email => "julie@example.com",
-                 :password => "hockey"
+                 :password => "hockey",
+                 :password_confirmation => "hockey"
                 },
                 { :name => "Test User",
                  :email => "test@email.com",
-                 :password => "test"
+                 :password => "test",
+                 :password_confirmation => "test"
                 },
                 { :name => "User Name",
                  :email => "user@email.com",
-                 :password => "password"
+                 :password => "password",
+                 :password_confirmation => "password"
                 },
                 { :name => "Jeff Cohen",
                  :email => "jeff@example.com",
-                 :password => "hockey"
+                 :password => "hockey",
+                 :password_confirmation => "hockey"
                 },
                 { :name => "John Doe",
                  :email => "jdoe@gmail.com",
-                 :password => "johndoe123"
+                 :password => "johndoe123",
+                 :password_confirmation => "johndoe123"
                 }
             ]
 
@@ -27,6 +32,7 @@ users_data.each do |user_data|
   u.name = user_data[:name]
   u.email = user_data[:email]
   u.password = user_data[:password]
+  u.password_confirmation = user_data[:password_confirmation]
   u.save
 end
 
