@@ -1,0 +1,10 @@
+<h1 class="page-header">All Users</h1>
+
+<% @users.each do |user| %>
+  <div class="row">
+      <h2><%= link_to user.name, user_path(user.id) %></h2>
+      <p>Name: <%= user.name %></p>
+      <p>Email: <%= user.email %></p>
+      <p>Joined on: <%= user.created_at %></p>
+  </div>
+<% end %>

@@ -22,17 +22,4 @@ class CommentsController < ApplicationController
     end
   end
 
-
-  # def destroy
-  #   post_id = params[:id]
-  #   user_id = session[:user_id]
-  #   l = Like.find_by(post_id: params[:id], user_id: session[:user_id])
-  #   if l.nil?
-  #     redirect_to_current_url "Not commented"
-  #   else
-  #     l.destroy
-  #     redirect_to_current_url "Uncommented!"
-  #   end
-  # end
-
 end

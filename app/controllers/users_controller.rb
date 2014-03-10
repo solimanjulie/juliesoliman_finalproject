@@ -44,4 +44,14 @@ class UsersController < ApplicationController
       redirect_to root_url, notice: "Thanks for signing up, #{@user.name}!"
     end
   end
+
+  def index
+    @users = User.all.order("created_at desc")
+  end
+
+  def destroy
+    user = User.find_by(params[:id])
+    user.destroy
+    redirect_to logout_url
+  end
 end

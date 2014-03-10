@@ -20,7 +20,6 @@ class LikesController < ApplicationController
     redirect_to_current_url "Liked!"
   end
 
-
   def destroy
     post_id = params[:id]
     user_id = session[:user_id]
