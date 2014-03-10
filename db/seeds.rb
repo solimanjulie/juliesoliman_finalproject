@@ -66,6 +66,7 @@ Follow.destroy_all
 Follow.create(leader_id: start_index, follower_id: start_index+1)
 Follow.create(leader_id: start_index+1, follower_id: start_index)
 Follow.create(leader_id: start_index+2, follower_id:start_index)
+Follow.create(leader_id: start_index+2, follower_id:start_index+3)
 
 # Create some likes
 post_start_index = Post.first.id

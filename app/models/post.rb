@@ -3,7 +3,8 @@ class Post < ActiveRecord::Base
   belongs_to :user
   has_many :likers
   has_many :commenters
-  has_many :topics
+  has_many :mentions
+  has_many :topics, through: :mentions, dependent: :destroy
 
   validate :post_text_entered
 
