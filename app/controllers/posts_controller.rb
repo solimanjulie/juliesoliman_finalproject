@@ -80,8 +80,9 @@ class PostsController < ApplicationController
       @logged_in = false
     else
       @logged_in = true
-      # TODO fix this logic
-     @posts = Post.joins('INNER JOIN follows ON follows.leader_id = posts.user_id').order("updated_at desc")
+      follower_id = session[:user_id]
+      leader_ids = User.joins(:followers).where("follower_id = #{follower_id}").uniq
+      @posts = Post.where(user_id: leader_ids).order("updated_at desc")
     end
     @num_users = User.count
     @num_posts = Post.count

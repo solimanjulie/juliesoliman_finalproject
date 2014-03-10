@@ -19,9 +19,9 @@ class FollowsController < ApplicationController
   end
 
   def show
-    # TODO: FIX THIS LOGIC
-    @leaders = User.joins('INNER JOIN follows ON users.id = follows.leader_id').where(follower_id = params[:id]).where.not(id: params[:id]).distinct
-    @followers = User.joins('INNER JOIN follows ON users.id = follows.follower_id').where(leader_id = params[:id]).where.not(id: params[:id]).distinct
+    user_id = params[:id]
+    @leaders = User.joins(:followers).where("follower_id = #{user_id}")
+    @followers = User.joins(:leaders).where("leader_id = #{user_id}")
   end
 
 end
