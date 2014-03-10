@@ -1,15 +1,5 @@
 class FollowsController < ApplicationController
 
-  # before_action :check_if_following, :only => :new
-
-  # # just in case!
-  # def check_if_following
-  #   @check = Follow.find_by(:follower_id => session[:user_id], :leader_id => params[:format])
-  #   if @check
-  #     redirect_to user_url(params[:format]), notice: "Already following!"
-  #   end
-  # end
-
   def new
     f = Follow.new
     f.leader_id = params[:format]

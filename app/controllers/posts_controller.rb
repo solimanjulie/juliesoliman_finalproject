@@ -2,7 +2,6 @@ class PostsController < ApplicationController
 
   before_action :require_login, :except => [:home, :login]
   before_action :identify_user
-  # before_action :validate_entry, :only => [:create, :update]
 
   def identify_user
     user = User.find_by(id: session[:user_id])
@@ -16,13 +15,6 @@ class PostsController < ApplicationController
       redirect_to root_url, notice: "Nice Try!"
     end
   end
-
-  # def validate_entry
-  #   # we already ensure that there is text before adding it to the table, but we need user feedback
-  #   if params["post_text"].blank?
-  #     redirect_to user_url(session[:user_id]), notice: "You must enter text to post!"
-  #   end
-  # end
 
   def logout
     reset_session
@@ -91,5 +83,8 @@ class PostsController < ApplicationController
       # TODO fix this logic
      @posts = Post.joins('INNER JOIN follows ON follows.leader_id = posts.user_id').order("updated_at desc")
     end
+    @num_users = User.count
+    @num_posts = Post.count
+    @latest_post_time = Post.order("updated_at asc").first.updated_at
   end
 end

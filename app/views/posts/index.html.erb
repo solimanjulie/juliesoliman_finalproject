@@ -5,6 +5,16 @@
     <%user = User.find_by(id: post.user_id) %>
     <h2><%= link_to user.name, user_path(user.id) %></h2>
     <p><%= post.text %></p>
+
+   <% topics = Topic.joins('INNER JOIN mentions ON topics.id = mentions.topic_id').where('mentions.post_id = ?', post.id) %>
+      <% if !topics.blank? %>
+        <p>Topic(s):
+        <% topics.each do |topic| %>
+           <%= link_to topic.name, topic_path(topic.id) %>
+        <% end %>
+        </p>
+      <% end %>
+
     <p>Likes: <%= Like.where(post_id: post.id).count %></p>
       <% if Like.find_by(post_id: post.id, user_id: session[:user_id] ) %>
         <%= link_to "Unlike", like_path(post.id), :method => 'delete',
@@ -35,7 +45,5 @@
         </div>
 
   </div>
-
-
 
 <% end %>

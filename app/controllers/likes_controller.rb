@@ -1,15 +1,5 @@
 class LikesController < ApplicationController
 
-   # before_action :check_if_liked, :only => :new
-
-  # just in case!
-  # def check_if_liked
-  #   @check = Like.find_by(:user_id => session[:user_id], :post_id => params[:format])
-  #   if @check
-  #     redirect_to_current_url "Already liked!"
-  #   end
-  # end
-
   def redirect_to_current_url(notice_string)
       session[:return_to] ||= request.referer
       if notice_string
