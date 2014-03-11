@@ -4,13 +4,8 @@
               :class => "pull-right btn btn-success btn-large btn-danger" %>
   <% end %>
 
-<h4><%= link_to "Following: #{@user.leaders.count}
-  | Followers: #{@user.followers.count}",
-  follow_path(@user.id) %></h4>
-
-<p>Name: <%= @user.name %></p>
-<p>Email: <%= @user.email %></p>
-
+  <% @users = [@user] %>
+  <%= render "user" %>
 
  <% if @can_edit %>
   <div class="row">

@@ -1,0 +1,8 @@
+<% @users.each do |user| %>
+  <div class="row">
+        <h2><%= link_to user.name, user_path(user.id) %></h2>
+        <p>Email: <%= user.email %></p>
+        <p>Joined on: <%= user.created_at %></p>
+        <h4><%= link_to "Following: #{user.leaders.count} | Followers: #{user.followers.count}", follow_path(user.id) %></h4>
+  </div>
+<%end%>
